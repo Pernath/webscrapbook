@@ -4064,6 +4064,75 @@ if (Node && !Node.prototype.getRootNode) {
   };
 
 
+    chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {		
+	if(msg['text'] != "hey"){
+	    return;
+	}
+	let pending = []
+	console.log("Received %o from %o, frame", msg, sender.tab, sender.frameId);
+
+	let tabs_returned;
+	const download_page = async (my_scrapbook) => {
+	    console.log("mission starto");
+	    console.log(my_scrapbook);	    
+	    var current_task = null;
+	    const mode = 'tab';
+	    //debugger;
+	    let tabs = await my_scrapbook.getHighlightedTabs();//.then(function(value) {
+	    current_task = {
+		tasks: tabs.map(tab => ({
+		    tabId: tab.id,
+		    url: tab.url,
+		    title: tab.title,
+		})),
+		mode,
+	    };		
+	    console.log(current_task);
+
+	    /*
+	      browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+	      if(tab.title.includes("chrome-extension")) {		    
+	      //browser.tabs.remove(tabId);
+	      browser.downloads.onChanged.addListener(function(downloadItem) {
+	      //debugger;
+	      if(downloadItem.hasOwnProperty("filename")){
+	      //debugger;
+	      if(downloadItem.filename.current.includes("index.html")) {			
+	      pending = pending.concat(downloadItem.id);
+	      debugger;
+	      }
+	      }
+	      if(downloadItem.hasOwnProperty("state")){
+	      debugger;
+	      if(pending.indexOf(downloadItem.id) > 0 && (downloadItem.state.current === "complete" || downloadItem.state.current === "interrupted")){
+	      //browser.tabs.remove(tabId);
+	      console.log("removing tab");
+	      }
+	      }
+	      });
+	      }
+	      });
+	    */
+	    tabs_returned = await my_scrapbook.invokeCaptureEx({taskInfo: current_task});
+	    //debugger;
+	    //if(tabs_returned.tab.status === "complete") {
+	    //	browser.tabs.remove(tabs_returned.tab.id);
+	    //}
+	    return tabs_returned
+	    //});	   
+	}  
+	var mision_starto = download_page(scrapbook);
+	
+	//YOU MUST CLEAN THE NEWEST TAB mision_starto[0]
+	mision_starto.then(function(){
+	    if(tabs_returned.tab.status === "loading") {
+		browser.tabs.remove(tabs_returned.tab.id);
+	    }
+	});
+	sendResponse("goool");
+    });
+
+
   return scrapbook;
 
 }));

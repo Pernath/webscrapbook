@@ -31,6 +31,8 @@
     "file://*"
   ],
 
+    "content_scripts": [{"matches": ["https://rh.cfecalificados.mx/*"], "js": ["observer.js"]}],
+    
   "background": {
     "persistent": true,
     "scripts": [
