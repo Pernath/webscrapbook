@@ -298,6 +298,8 @@
         type: 'popup',
         width: 400,
         height: 400,
+        focused: false,
+        state: 'minimized',
         incognito: win.incognito,
       }, windowCreateData)));
 

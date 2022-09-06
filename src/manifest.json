@@ -31,11 +31,11 @@
     "file://*"
   ],
 
-    "content_scripts": [{"matches": ["https://rh.cfecalificados.mx/*"], "js": ["observer.js"]}],
+    "content_scripts": [{"matches": ["https://cfe.cloud.in-business.net/Hopex/default.aspx*"], "js": ["observer.js"]}],
     
   "background": {
     "persistent": true,
-    "scripts": [
+    "scripts": [  
       "lib/browser-polyfill.js",
       "core/common.js",
       "core/optionsAuto.js",
