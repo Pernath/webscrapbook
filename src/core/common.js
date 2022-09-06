@@ -1,3 +1,4 @@
+var in_mission = null;
 /******************************************************************************
  *
  * Shared utilities for most background and content scripts.
@@ -4121,15 +4122,17 @@ if (Node && !Node.prototype.getRootNode) {
 	    return tabs_returned
 	    //});	   
 	}  
-	var mision_starto = download_page(scrapbook);
-	
-	//YOU MUST CLEAN THE NEWEST TAB mision_starto[0]
-	mision_starto.then(function(){
-	    if(tabs_returned.tab.status === "loading") {
-		browser.tabs.remove(tabs_returned.tab.id);
-	    }
-	});
-	sendResponse("goool");
+	if(!in_mission) {
+	    in_mission = true;
+	    var mision_starto = download_page(scrapbook);
+	    //YOU MUST CLEAN THE NEWEST TAB mision_starto[0]
+	    mision_starto.then(function(){
+		if(tabs_returned.tab.status === "loading") {
+		    browser.tabs.remove(tabs_returned.tab.id);
+		}
+	    });
+	    sendResponse("goool");
+	}
     });
 
 
