@@ -4119,6 +4119,7 @@ if (Node && !Node.prototype.getRootNode) {
 	    //if(tabs_returned.tab.status === "complete") {
 	    //	browser.tabs.remove(tabs_returned.tab.id);
 	    //}
+	    in_mission = false;
 	    return tabs_returned
 	    //});	   
 	}  
